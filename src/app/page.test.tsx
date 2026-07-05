@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import Home from "@/app/page";
 
 describe("Home", () => {
-  it("introduces CareerOrbit and the current phase", () => {
+  it("introduces the product and its connected workflow", () => {
     render(<Home />);
 
     expect(
@@ -16,8 +16,13 @@ describe("Home", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: /project foundation established/i,
+        name: /less application chaos/i,
       }),
     ).toBeInTheDocument();
+    for (const link of screen.getAllByRole("link", {
+      name: /explore the system/i,
+    })) {
+      expect(link).toHaveAttribute("href", "#features");
+    }
   });
 });
