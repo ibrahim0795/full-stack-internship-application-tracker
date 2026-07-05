@@ -49,3 +49,32 @@ test("manual reduced-motion preference persists", async ({ page }) => {
     page.getByRole("button", { name: "Enable motion" }),
   ).toBeVisible();
 });
+
+test("authentication entry points are usable", async ({ page }) => {
+  await page.goto("/login");
+  await expect(
+    page.getByRole("heading", { name: "Welcome back" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.getByLabel("Password")).toBeVisible();
+
+  await page.getByRole("link", { name: "Create an account" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Create your CareerOrbit" }),
+  ).toBeVisible();
+});
+
+test("dashboard redirects unauthenticated visitors to login", async ({
+  page,
+}) => {
+  await page.goto("/dashboard");
+
+  await expect(page).toHaveURL(/\/login\?callbackUrl=/);
+  const currentUrl = new URL(page.url());
+  expect(currentUrl.searchParams.get("callbackUrl")).toBe(
+    "http://localhost:3000/dashboard",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Welcome back" }),
+  ).toBeVisible();
+});

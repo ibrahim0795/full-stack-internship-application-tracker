@@ -5,6 +5,8 @@ export const serverEnvironmentSchema = z.object({
   AUTH_SECRET: z.string().min(32),
   AUTH_GITHUB_ID: z.string().min(1).optional(),
   AUTH_GITHUB_SECRET: z.string().min(1).optional(),
+  RESEND_API_KEY: z.string().min(1).optional(),
+  AUTH_EMAIL_FROM: z.string().min(1).optional(),
   NEXT_PUBLIC_APP_URL: z.string().url(),
 });
 

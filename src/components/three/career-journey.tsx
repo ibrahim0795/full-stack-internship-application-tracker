@@ -406,9 +406,9 @@ export function CareerJourney() {
             </p>
             <a
               className={cn(buttonVariants({ size: "lg" }), "mt-9")}
-              href="https://github.com/ibrahim0795/full-stack-internship-application-tracker"
+              href="/register"
             >
-              Follow the mission on GitHub
+              Start your CareerOrbit
               <BriefcaseBusiness aria-hidden="true" size={18} />
             </a>
             <div className="mt-8 flex flex-wrap justify-center gap-2 text-xs text-slate-400">

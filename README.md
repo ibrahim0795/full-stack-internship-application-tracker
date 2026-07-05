@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 3 adds the immersive seven-scene 3D scroll journey, procedural WebGL scene, performance adaptation, and accessible reduced-motion fallback. Product features will be added through focused, reviewable branches.
+> **Current status:** Phase 4 adds secure credentials authentication, optional GitHub OAuth, protected routes, and a password-reset delivery boundary. Application tracking follows in focused, reviewable branches.
 
 ## Planned product capabilities
 
@@ -27,23 +27,25 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 - [Application architecture](docs/architecture.md)
 - [3D experience](docs/3d-experience.md)
 - [Design system](docs/design-system.md)
+- [Authentication architecture](docs/authentication.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)
 
 ## Local development
 
-Requirements: Node.js 24 or a current supported LTS release, npm, and Git.
+Requirements: Node.js 24 or a current supported LTS release, npm, Git, and PostgreSQL.
 
 ```powershell
 npm install
 Copy-Item .env.example .env.local
+npm run db:migrate
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-The foundation page does not connect to PostgreSQL yet. Database and authentication variables are defined early so later phases have one documented configuration contract.
+Replace the example `AUTH_SECRET` before starting the app. Credentials authentication requires PostgreSQL. GitHub OAuth and password-reset email remain optional; see the [authentication guide](docs/authentication.md).
 
 ## Quality checks
 
