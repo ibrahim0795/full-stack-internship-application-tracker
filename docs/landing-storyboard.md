@@ -1,5 +1,7 @@
 # 3D landing-page scroll storyboard
 
+> Implementation status: completed in Phase 3. See [3d-experience.md](3d-experience.md) for runtime and fallback details.
+
 The landing page is a single visual journey with seven semantic HTML chapters. One pinned 3D scene responds to normalised scroll progress while each chapter supplies accessible copy and navigation.
 
 | Scene             | Scroll range | Camera and 3D action                                                                                 | HTML narrative                                                              |
