@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 4 adds secure credentials authentication, optional GitHub OAuth, protected routes, and a password-reset delivery boundary. Application tracking follows in focused, reviewable branches.
+> **Current status:** Phase 5 adds the complete relational PostgreSQL model, ownership-safe repositories, integrity constraints, migrations, and a coherent demo seed. Application interfaces follow in focused, reviewable branches.
 
 ## Planned product capabilities
 
@@ -40,12 +40,15 @@ Requirements: Node.js 24 or a current supported LTS release, npm, Git, and Postg
 npm install
 Copy-Item .env.example .env.local
 npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
 Replace the example `AUTH_SECRET` before starting the app. Credentials authentication requires PostgreSQL. GitHub OAuth and password-reset email remain optional; see the [authentication guide](docs/authentication.md).
+
+The optional seed creates a clearly labelled local demo workspace (`demo@careerorbit.dev`) with applications at several stages. Its sample organisations and contacts are fictional and are not presented as CareerOrbit customers.
 
 ## Quality checks
 
