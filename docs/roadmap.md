@@ -5,8 +5,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 ## Current progress
 
 - Phase 1: complete and merged
-- Phase 2: complete and awaiting review
-- Phases 3-14: not started
+- Phase 2: complete and merged
+- Phase 3: complete and awaiting review
+- Phases 4-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
