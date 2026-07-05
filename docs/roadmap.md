@@ -7,8 +7,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 1: complete and merged
 - Phase 2: complete and merged
 - Phase 3: complete and merged
-- Phase 4: complete and awaiting review
-- Phases 5-14: not started
+- Phase 4: complete and merged
+- Phase 5: complete and awaiting review
+- Phases 6-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -37,6 +38,16 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Single-use password-reset tokens are hashed in PostgreSQL and expire after 30 minutes.
 - [x] Authentication attempts have a replaceable rate-limit boundary.
 - [x] Login, registration, reset, and protected-route behaviour has automated coverage.
+
+## Phase 5 acceptance criteria
+
+- [x] All private product models, enums, relations, timestamps, and indexes exist in Prisma.
+- [x] Composite relationships prevent cross-owner application descendants and tag links.
+- [x] PostgreSQL checks enforce salary, currency, position, file-size, tag, and theme rules.
+- [x] A partial unique index permits at most one default CV per user.
+- [x] The deterministic seed resets only its demo workspace and creates coherent sample data.
+- [x] Repository reads and mutations require an authenticated user ID.
+- [x] Ownership filters and the migration contract have automated tests.
 
 ## Phase 1 acceptance criteria
 

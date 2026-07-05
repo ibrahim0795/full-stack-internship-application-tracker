@@ -7,6 +7,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ApplicationStage {
+  SAVED
+  PREPARING
+  APPLIED
+  ASSESSMENT
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+enum EmploymentType {
+  INTERNSHIP
+  PART_TIME
+  FULL_TIME
+  CONTRACT
+  FREELANCE
+  OTHER
+}
+
+enum WorkArrangement {
+  REMOTE
+  HYBRID
+  ON_SITE
+  UNSPECIFIED
+}
+
+enum InterviewFormat {
+  PHONE
+  VIDEO
+  ON_SITE
+  TAKE_HOME
+  LIVE_CODING
+  OTHER
+}
+
+enum InterviewOutcome {
+  PENDING
+  PASSED
+  FAILED
+  CANCELLED
+}
+
+enum ReminderType {
+  DEADLINE
+  INTERVIEW
+  FOLLOW_UP
+  CUSTOM
+}
+
 model User {
   id                  String               @id @default(cuid())
   name                String?
@@ -17,6 +67,13 @@ model User {
   accounts            Account[]
   sessions            Session[]
   passwordResetTokens PasswordResetToken[]
+  applications        Application[]
+  interviews          Interview[]
+  resumes             Resume[]
+  reminders           Reminder[]
+  tags                Tag[]
+  timezone            String               @default("UTC")
+  theme               String               @default("system")
   createdAt           DateTime             @default(now()) @map("created_at")
   updatedAt           DateTime             @updatedAt @map("updated_at")
 
@@ -73,4 +130,202 @@ model PasswordResetToken {
 
   @@index([userId, expiresAt])
   @@map("password_reset_tokens")
+}
+
+model Application {
+  id              String              @id @default(cuid())
+  userId          String              @map("user_id")
+  resumeId        String?             @map("resume_id")
+  companyName     String              @map("company_name")
+  positionTitle   String              @map("position_title")
+  jobDescription  String?             @db.Text @map("job_description")
+  jobUrl          String?             @db.Text @map("job_url")
+  employmentType  EmploymentType     @default(INTERNSHIP) @map("employment_type")
+  workArrangement WorkArrangement     @default(UNSPECIFIED) @map("work_arrangement")
+  city            String?
+  country         String?
+  salaryMinimum   Decimal?            @db.Decimal(12, 2) @map("salary_minimum")
+  salaryMaximum   Decimal?            @db.Decimal(12, 2) @map("salary_maximum")
+  currency        String?             @db.Char(3)
+  stage           ApplicationStage    @default(SAVED)
+  applicationDate DateTime?           @db.Timestamptz(3) @map("application_date")
+  closingDate     DateTime?           @db.Timestamptz(3) @map("closing_date")
+  interviewDate   DateTime?           @db.Timestamptz(3) @map("interview_date")
+  personalNotes   String?             @db.Text @map("personal_notes")
+  createdAt       DateTime            @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt       DateTime            @updatedAt @db.Timestamptz(3) @map("updated_at")
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume          Resume?             @relation(fields: [resumeId, userId], references: [id, userId], onDelete: Restrict)
+  contacts        CompanyContact[]
+  notes           ApplicationNote[]
+  interviews      Interview[]
+  reminders       Reminder[]
+  tags            ApplicationTag[]
+
+  @@unique([id, userId])
+  @@index([userId, stage])
+  @@index([userId, closingDate])
+  @@index([userId, interviewDate])
+  @@index([userId, updatedAt])
+  @@index([resumeId, userId])
+  @@map("applications")
+}
+
+model CompanyContact {
+  id            String      @id @default(cuid())
+  applicationId String      @map("application_id")
+  userId        String      @map("user_id")
+  name          String
+  email         String?
+  role          String?
+  phone         String?
+  profileUrl    String?     @db.Text @map("profile_url")
+  createdAt     DateTime    @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt     DateTime    @updatedAt @db.Timestamptz(3) @map("updated_at")
+  application   Application @relation(fields: [applicationId, userId], references: [id, userId], onDelete: Cascade)
+
+  @@index([userId, applicationId])
+  @@map("company_contacts")
+}
+
+model ApplicationNote {
+  id            String      @id @default(cuid())
+  applicationId String      @map("application_id")
+  userId        String      @map("user_id")
+  body          String      @db.Text
+  createdAt     DateTime    @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt     DateTime    @updatedAt @db.Timestamptz(3) @map("updated_at")
+  application   Application @relation(fields: [applicationId, userId], references: [id, userId], onDelete: Cascade)
+
+  @@index([userId, applicationId, createdAt])
+  @@map("application_notes")
+}
+
+model Interview {
+  id              String               @id @default(cuid())
+  applicationId   String               @map("application_id")
+  userId          String               @map("user_id")
+  scheduledAt     DateTime             @db.Timestamptz(3) @map("scheduled_at")
+  timezone        String               @default("UTC")
+  format          InterviewFormat
+  locationOrLink  String?              @db.Text @map("location_or_link")
+  interviewerName String?              @map("interviewer_name")
+  interviewerRole String?              @map("interviewer_role")
+  interviewerEmail String?             @map("interviewer_email")
+  outcome         InterviewOutcome     @default(PENDING)
+  followUpAt      DateTime?            @db.Timestamptz(3) @map("follow_up_at")
+  notes           String?              @db.Text
+  createdAt       DateTime             @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt       DateTime             @updatedAt @db.Timestamptz(3) @map("updated_at")
+  application     Application          @relation(fields: [applicationId, userId], references: [id, userId], onDelete: Cascade)
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions       InterviewQuestion[]
+  checklistItems  ChecklistItem[]
+  reminders       Reminder[]
+
+  @@unique([id, userId])
+  @@index([userId, scheduledAt])
+  @@index([applicationId, userId])
+  @@map("interviews")
+}
+
+model InterviewQuestion {
+  id          String    @id @default(cuid())
+  interviewId String    @map("interview_id")
+  prompt      String    @db.Text
+  answer      String?   @db.Text
+  category    String?
+  position    Int       @default(0)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(3) @map("updated_at")
+  interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+
+  @@index([interviewId, position])
+  @@map("interview_questions")
+}
+
+model ChecklistItem {
+  id          String    @id @default(cuid())
+  interviewId String    @map("interview_id")
+  label       String
+  completedAt DateTime? @db.Timestamptz(3) @map("completed_at")
+  position    Int       @default(0)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(3) @map("updated_at")
+  interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+
+  @@index([interviewId, position])
+  @@map("checklist_items")
+}
+
+model Resume {
+  id               String        @id @default(cuid())
+  userId           String        @map("user_id")
+  name             String
+  targetRole       String?       @map("target_role")
+  fileUrl          String?       @db.Text @map("file_url")
+  storageKey       String?       @db.Text @map("storage_key")
+  originalFilename String?       @map("original_filename")
+  mimeType         String?       @map("mime_type")
+  sizeBytes        Int?          @map("size_bytes")
+  isDefault        Boolean       @default(false) @map("is_default")
+  createdAt        DateTime      @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt        DateTime      @updatedAt @db.Timestamptz(3) @map("updated_at")
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications     Application[]
+
+  @@unique([id, userId])
+  @@index([userId, updatedAt])
+  @@map("resumes")
+}
+
+model Reminder {
+  id            String        @id @default(cuid())
+  userId        String        @map("user_id")
+  applicationId String?       @map("application_id")
+  interviewId   String?       @map("interview_id")
+  type          ReminderType  @default(CUSTOM)
+  title         String
+  dueAt         DateTime      @db.Timestamptz(3) @map("due_at")
+  completedAt   DateTime?     @db.Timestamptz(3) @map("completed_at")
+  createdAt     DateTime      @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt     DateTime      @updatedAt @db.Timestamptz(3) @map("updated_at")
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application   Application?  @relation(fields: [applicationId, userId], references: [id, userId], onDelete: Cascade)
+  interview     Interview?    @relation(fields: [interviewId, userId], references: [id, userId], onDelete: Cascade)
+
+  @@index([userId, dueAt])
+  @@index([userId, completedAt, dueAt])
+  @@index([applicationId, userId])
+  @@index([interviewId, userId])
+  @@map("reminders")
+}
+
+model Tag {
+  id             String           @id @default(cuid())
+  userId         String           @map("user_id")
+  normalizedName String           @map("normalized_name")
+  displayName    String           @map("display_name")
+  color          String?
+  createdAt      DateTime         @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt      DateTime         @updatedAt @db.Timestamptz(3) @map("updated_at")
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications   ApplicationTag[]
+
+  @@unique([id, userId])
+  @@unique([userId, normalizedName])
+  @@map("tags")
+}
+
+model ApplicationTag {
+  applicationId String      @map("application_id")
+  tagId         String      @map("tag_id")
+  userId        String      @map("user_id")
+  createdAt     DateTime    @default(now()) @db.Timestamptz(3) @map("created_at")
+  application   Application @relation(fields: [applicationId, userId], references: [id, userId], onDelete: Cascade)
+  tag           Tag         @relation(fields: [tagId, userId], references: [id, userId], onDelete: Cascade)
+
+  @@id([applicationId, tagId])
+  @@index([userId, tagId])
+  @@map("application_tags")
 }

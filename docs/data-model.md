@@ -1,6 +1,6 @@
 # Relational data model
 
-This is the Phase 1 design contract. The executable Prisma schema and migrations belong to the database-schema phase.
+This contract is implemented by `prisma/schema.prisma` and the versioned migrations in `prisma/migrations`. PostgreSQL is the source of truth; CV files themselves belong in object storage rather than database rows.
 
 ## Core relationships
 
@@ -56,3 +56,21 @@ User 1--* Session
 ## Ownership rule
 
 No repository method fetches a private record by ID alone. It must scope through `userId`, either as a direct column or through a parent join. This rule applies to reads, updates, deletes, drag-and-drop stage changes, analytics, exports, and file access.
+
+The schema reinforces this rule with composite `(id, user_id)` references for assigned CVs, application descendants, interviews, reminders, and application-tag links. An assigned CV is restricted from deletion until the CV service unassigns it transactionally. The application repository uses `findFirst`, `updateMany`, and `deleteMany` with both identifiers so an unknown record and another user's record produce the same result.
+
+## Database-enforced constraints
+
+The product-data migration adds constraints Prisma cannot fully express:
+
+- Salary values cannot be negative, and a minimum cannot exceed its maximum.
+- Salary rows require a three-letter uppercase currency.
+- Question and checklist positions cannot be negative.
+- CV file size metadata cannot be negative.
+- Each user can have at most one default CV through a partial unique index.
+- Theme values are limited to `light`, `dark`, or `system`.
+- Tag normalized names must be trimmed, lowercase, non-empty, and unique per user.
+
+## Seed workspace
+
+`npm run db:seed` resets only the clearly labelled demo user's product records, then creates three applications, a CV record, skill tags, an interview checklist, a preparation question, a contact, a note, and a reminder. It never modifies another user's data.
