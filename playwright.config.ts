@@ -16,6 +16,16 @@ export default defineConfig({
   ],
   webServer: {
     command: "npm run dev",
+    env: {
+      AUTH_SECRET:
+        process.env.AUTH_SECRET ??
+        "careerorbit-playwright-secret-at-least-32-characters",
+      DATABASE_URL:
+        process.env.DATABASE_URL ??
+        "postgresql://postgres:postgres@localhost:5432/careerorbit",
+      NEXT_PUBLIC_APP_URL:
+        process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+    },
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },

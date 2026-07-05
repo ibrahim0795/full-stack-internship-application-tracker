@@ -43,12 +43,21 @@ export function MarketingHeader() {
           <ThemeToggle />
           <Link
             className={cn(
-              buttonVariants({ size: "sm" }),
-              "hidden sm:inline-flex",
+              buttonVariants({ size: "sm", variant: "ghost" }),
+              "hidden md:inline-flex",
             )}
-            href="#features"
+            href="/login"
           >
-            Explore the system
+            Sign in
+          </Link>
+          <Link
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "hidden md:inline-flex",
+            )}
+            href="/register"
+          >
+            Create account
           </Link>
           <button
             aria-controls="mobile-navigation"
@@ -84,11 +93,18 @@ export function MarketingHeader() {
               </Link>
             ))}
             <Link
-              className={cn(buttonVariants(), "mt-3 sm:hidden")}
-              href="#features"
+              className={cn(buttonVariants({ variant: "secondary" }), "mt-3")}
+              href="/login"
               onClick={() => setMenuOpen(false)}
             >
-              Explore the system
+              Sign in
+            </Link>
+            <Link
+              className={buttonVariants()}
+              href="/register"
+              onClick={() => setMenuOpen(false)}
+            >
+              Create account
             </Link>
           </div>
         </nav>

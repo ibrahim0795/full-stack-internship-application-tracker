@@ -20,6 +20,12 @@ export function MarketingFooter() {
           <Link className="hover:text-foreground" href="#workflow">
             Workflow
           </Link>
+          <Link className="hover:text-foreground" href="/login">
+            Sign in
+          </Link>
+          <Link className="hover:text-foreground" href="/register">
+            Create account
+          </Link>
           <a
             className="hover:text-foreground"
             href="https://github.com/ibrahim0795/full-stack-internship-application-tracker"

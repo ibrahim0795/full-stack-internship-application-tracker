@@ -6,8 +6,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 
 - Phase 1: complete and merged
 - Phase 2: complete and merged
-- Phase 3: complete and awaiting review
-- Phases 4-14: not started
+- Phase 3: complete and merged
+- Phase 4: complete and awaiting review
+- Phases 5-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -25,6 +26,17 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 | 12    | `feature/accessibility-performance` | Keyboard audit, contrast, reduced motion, responsive QA, WebGL fallback, and performance budget.            |
 | 13    | `feature/testing`                   | Expanded unit, component, integration, and end-to-end coverage for critical journeys.                       |
 | 14    | `feature/deployment`                | Production database, storage, environment configuration, CI, deployment, demo data, and final README media. |
+
+## Phase 4 acceptance criteria
+
+- [x] Email/password registration uses server-side Zod validation and bcrypt hashing.
+- [x] Credentials login and logout use Auth.js sessions.
+- [x] GitHub OAuth is available only when its credentials are configured.
+- [x] Dashboard access is checked in the proxy and again on the server page.
+- [x] Duplicate email, unsafe redirect, and account-enumeration risks are handled.
+- [x] Single-use password-reset tokens are hashed in PostgreSQL and expire after 30 minutes.
+- [x] Authentication attempts have a replaceable rate-limit boundary.
+- [x] Login, registration, reset, and protected-route behaviour has automated coverage.
 
 ## Phase 1 acceptance criteria
 
@@ -57,6 +69,8 @@ Provider selection is deferred until its implementing phase to avoid creating un
 | `AUTH_SECRET`         | Session and token security                  | Authentication           |
 | `AUTH_GITHUB_ID`      | GitHub OAuth client identifier              | Authentication, optional |
 | `AUTH_GITHUB_SECRET`  | GitHub OAuth client secret                  | Authentication, optional |
+| `RESEND_API_KEY`      | Password-reset email API key                | Authentication, optional |
+| `AUTH_EMAIL_FROM`     | Verified reset-email sender                 | Authentication, optional |
 | `NEXT_PUBLIC_APP_URL` | Canonical local or deployed application URL | Foundation/deployment    |
 
-Storage and email variables will be added to `.env.example` only when their providers are selected. Real values belong in local or deployment secrets and must never be committed.
+Storage variables will be added only when their provider is selected. Real values belong in local or deployment secrets and must never be committed.
