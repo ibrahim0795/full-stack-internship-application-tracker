@@ -2,6 +2,12 @@
 
 Each phase uses one focused branch, issue, review, and pull request. A phase starts only after the previous phase is approved and merged.
 
+## Current progress
+
+- Phase 1: complete and merged
+- Phase 2: complete and awaiting review
+- Phases 3-14: not started
+
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | 1     | `feature/project-foundation`        | Architecture, data-model contract, storyboard, tooling, minimal page, and quality gates.                    |

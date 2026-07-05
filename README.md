@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 1 establishes the architecture, technical foundation, quality gates, and delivery roadmap. Product features will be added through focused, reviewable branches.
+> **Current status:** Phase 2 establishes the reusable design system, responsive marketing shell, light/dark themes, and protected-app shell primitives. Product features will be added through focused, reviewable branches.
 
 ## Planned product capabilities
 
@@ -25,6 +25,7 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 ## Architecture and planning
 
 - [Application architecture](docs/architecture.md)
+- [Design system](docs/design-system.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)
