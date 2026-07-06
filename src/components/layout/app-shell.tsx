@@ -21,6 +21,12 @@ export interface AppShellProps {
 export function AppShell({ children, navigation, title }: AppShellProps) {
   return (
     <div className="bg-background min-h-screen lg:grid lg:grid-cols-[17rem_1fr]">
+      <a
+        className="bg-primary text-primary-foreground focus:outline-focus fixed top-3 left-3 z-[100] -translate-y-24 rounded-full px-4 py-2 font-semibold transition focus:translate-y-0 focus:outline-2 focus:outline-offset-2"
+        href="#main-content"
+      >
+        Skip to content
+      </a>
       <aside className="border-border bg-surface/45 hidden border-r p-5 lg:flex lg:flex-col">
         <BrandMark />
         <nav className="mt-10 grid gap-1" aria-label="Application navigation">
@@ -69,7 +75,9 @@ export function AppShell({ children, navigation, title }: AppShellProps) {
             </Link>
           ))}
         </nav>
-        <main className="p-5 sm:p-8">{children}</main>
+        <main className="p-5 sm:p-8" id="main-content" tabIndex={-1}>
+          {children}
+        </main>
       </div>
     </div>
   );

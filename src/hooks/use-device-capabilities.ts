@@ -3,7 +3,26 @@
 import { useSyncExternalStore } from "react";
 
 let cachedWebglSupport: boolean | undefined;
-let cachedConstrainedDevice: boolean | undefined;
+
+export function isConstrainedDevice({
+  cores,
+  effectiveType,
+  memory,
+  saveData,
+}: {
+  cores: number;
+  effectiveType?: string;
+  memory: number;
+  saveData?: boolean;
+}) {
+  return (
+    memory <= 2 ||
+    cores <= 2 ||
+    saveData === true ||
+    effectiveType === "slow-2g" ||
+    effectiveType === "2g"
+  );
+}
 
 function subscribeToCapabilities(callback: () => void) {
   const compactQuery = window.matchMedia("(max-width: 767px)");
@@ -20,18 +39,20 @@ function detectCapabilities() {
     );
   }
 
-  if (cachedConstrainedDevice === undefined) {
-    const navigatorWithMemory = navigator as Navigator & {
-      deviceMemory?: number;
-    };
-    const memory = navigatorWithMemory.deviceMemory ?? 8;
-    const cores = navigator.hardwareConcurrency ?? 8;
-    cachedConstrainedDevice = memory <= 2 || cores <= 2;
-  }
+  const navigatorWithCapabilities = navigator as Navigator & {
+    connection?: { effectiveType?: string; saveData?: boolean };
+    deviceMemory?: number;
+  };
+  const constrained = isConstrainedDevice({
+    cores: navigator.hardwareConcurrency ?? 8,
+    effectiveType: navigatorWithCapabilities.connection?.effectiveType,
+    memory: navigatorWithCapabilities.deviceMemory ?? 8,
+    saveData: navigatorWithCapabilities.connection?.saveData,
+  });
 
   const compact =
-    cachedConstrainedDevice || window.matchMedia("(max-width: 767px)").matches;
-  return `${cachedWebglSupport}:${cachedConstrainedDevice}:${compact}`;
+    constrained || window.matchMedia("(max-width: 767px)").matches;
+  return `${cachedWebglSupport}:${constrained}:${compact}`;
 }
 
 function getServerCapabilities() {

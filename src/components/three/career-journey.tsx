@@ -78,6 +78,14 @@ export function CareerJourney() {
   const useStaticFallback = reduceMotion || constrained || !webglSupported;
 
   useEffect(() => {
+    document.documentElement.toggleAttribute(
+      "data-reduce-motion",
+      reduceMotion,
+    );
+    return () => document.documentElement.removeAttribute("data-reduce-motion");
+  }, [reduceMotion]);
+
+  useEffect(() => {
     const journey = journeyRef.current;
     if (!journey || useStaticFallback) return;
 
@@ -124,7 +132,7 @@ export function CareerJourney() {
 
   return (
     <section
-      className="dark text-foreground relative isolate bg-[#030711]"
+      className="dark text-foreground relative isolate bg-[#030711] contain-layout"
       onPointerLeave={() => {
         pointerRef.current = { x: 0, y: 0 };
       }}
