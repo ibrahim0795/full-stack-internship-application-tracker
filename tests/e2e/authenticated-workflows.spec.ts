@@ -38,6 +38,11 @@ test.describe.serial("database-backed authenticated journeys", () => {
     secondUser = `careerorbit-${identity}-two@example.com`;
   });
 
+  test.beforeEach(async ({ page }, testInfo) => {
+    const address = `203.0.113.${(testInfo.workerIndex % 200) + 1}`;
+    await page.setExtraHTTPHeaders({ "x-forwarded-for": address });
+  });
+
   test("registers and creates an application", async ({ page }) => {
     await register(page, firstUser);
     await page.goto("/applications/new");
@@ -66,12 +71,16 @@ test.describe.serial("database-backed authenticated journeys", () => {
     await page.getByPlaceholder("Search company or role").fill("Test Orbit");
     await page.getByRole("button", { name: "Apply" }).click();
     const applicationPath = new URL(applicationUrl).pathname;
-    await expect(page.locator(`a[href="${applicationPath}"]`)).toBeVisible();
+    await expect(
+      page.locator(`a[href="${applicationPath}"]:visible`),
+    ).toBeVisible();
 
     await page.goto("/kanban");
     const applicationId = applicationPath.split("/").at(-1);
-    const card = page.locator(`[data-application-id="${applicationId}"]`);
-    await card.getByLabel("Move to stage").selectOption("APPLIED");
+    const card = page.locator(
+      `[data-application-id="${applicationId}"]:visible`,
+    );
+    await card.locator("select:visible").selectOption("APPLIED");
     await expect(page.getByText(/moved to applied/i)).toBeVisible();
   });
 
@@ -81,7 +90,7 @@ test.describe.serial("database-backed authenticated journeys", () => {
     await register(page, secondUser);
     await page.goto(applicationUrl);
     await expect(
-      page.getByRole("heading", { name: /not found/i }),
+      page.getByRole("heading", { name: "Application unavailable" }),
     ).toBeVisible();
   });
 
@@ -92,7 +101,7 @@ test.describe.serial("database-backed authenticated journeys", () => {
     await page.getByRole("button", { name: "Delete application" }).click();
     await expect(page).toHaveURL(/\/applications$/);
     await expect(
-      page.locator(`a[href="${new URL(applicationUrl).pathname}"]`),
+      page.locator(`a[href="${new URL(applicationUrl).pathname}"]:visible`),
     ).not.toBeVisible();
   });
 });
