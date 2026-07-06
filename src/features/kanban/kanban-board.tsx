@@ -285,7 +285,7 @@ function ApplicationCard({
     : undefined;
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div data-application-id={application.id} ref={setNodeRef} style={style}>
       <Card
         className={cn(
           "bg-surface-raised rounded-2xl shadow-none",

@@ -2,7 +2,22 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 13 expands deterministic unit and component coverage and defines database-backed browser journeys for application CRUD, filtering, stage movement, and cross-user isolation.
+> **Current status:** All product phases are implemented and production-ready. Public deployment is awaiting managed PostgreSQL and Vercel credentials.
+
+**Live demo:** Pending first production deployment
+
+## Why CareerOrbit
+
+Students often track roles across bookmarks, spreadsheets, calendars, notes, and multiple CV files. CareerOrbit combines that fragmented process into one private workspace with a visible route from Saved to Offer.
+
+## Portfolio highlights
+
+- Owner-scoped authentication and relational PostgreSQL data
+- Full application CRUD with notes, contacts, skills, salary, search, filters, and sorting
+- Accessible optimistic Kanban workflow with database rollback
+- Real dashboard metrics, charts, deadlines, reminders, interviews, and CV usage
+- Cinematic 3D landing experience with reduced-motion and constrained-device fallbacks
+- Strict TypeScript, layered automated testing, CI, health checks, and release documentation
 
 ## Planned product capabilities
 
@@ -36,6 +51,7 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 - [CV manager](docs/cv-manager.md)
 - [Accessibility and performance](docs/accessibility-performance.md)
 - [Testing strategy](docs/testing.md)
+- [Production deployment](docs/deployment.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)
@@ -70,6 +86,16 @@ npm run build
 ```
 
 Authenticated browser journeys require a disposable `E2E_DATABASE_URL`; without it they are skipped explicitly. See the [testing strategy](docs/testing.md).
+
+GitHub Actions runs the full suite with an isolated PostgreSQL service, including authenticated cross-user browser journeys.
+
+## Deployment
+
+The repository includes Vercel configuration, explicit production migration commands, security headers, a database-aware `/api/health` endpoint, CI, rollback guidance, and a release checklist. See the [deployment guide](docs/deployment.md).
+
+## Screenshots and demonstration
+
+Final production screenshots and a short demonstration video will be added after the first public deployment so the README does not present local or fabricated URLs as a live product.
 
 ## Environment safety
 

@@ -16,12 +16,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  ),
   title: {
     default: "CareerOrbit",
     template: "%s | CareerOrbit",
   },
   description:
     "Navigate internship and junior-job applications from saved opportunity to offer.",
+  openGraph: {
+    description:
+      "Track applications, interviews, deadlines, CV versions, and career progress in one workspace.",
+    siteName: "CareerOrbit",
+    title: "CareerOrbit — Navigate your career journey",
+    type: "website",
+  },
+  robots: { follow: true, index: true },
 };
 
 export default function RootLayout({
