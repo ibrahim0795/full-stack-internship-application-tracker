@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 7 adds an accessible Kanban workflow with pointer and keyboard dragging, explicit mobile-friendly stage controls, optimistic persistence, and rollback on failure.
+> **Current status:** Phase 8 adds a real-data analytics dashboard with conversion metrics, accessible charts, deadlines, interviews, recent activity, and deterministic next actions.
 
 ## Planned product capabilities
 
@@ -30,6 +30,7 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 - [Authentication architecture](docs/authentication.md)
 - [Application management](docs/application-management.md)
 - [Kanban workflow](docs/kanban-workflow.md)
+- [Dashboard analytics](docs/dashboard-analytics.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)

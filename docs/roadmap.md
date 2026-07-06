@@ -10,8 +10,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 4: complete and merged
 - Phase 5: complete and merged
 - Phase 6: complete and merged
-- Phase 7: complete and awaiting review
-- Phases 8-14: not started
+- Phase 7: complete and merged
+- Phase 8: complete and awaiting review
+- Phases 9-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -73,6 +74,18 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Horizontal snap scrolling keeps columns readable on small screens.
 - [x] Loading, error, live-announcement, and empty-column states are implemented.
 - [x] Success, rollback, filtering, and protected-route behavior have automated tests.
+
+## Phase 8 acceptance criteria
+
+- [x] All metrics, charts, lists, and recommendations use owner-scoped database records.
+- [x] Total, weekly submissions, deadlines, interviews, interview rate, and offer rate are defined.
+- [x] Zero denominators and empty workspaces produce safe, useful states.
+- [x] Status and eight-week trend charts have semantic table equivalents.
+- [x] Upcoming lists exclude completed applications and canceled interviews.
+- [x] Recent applications use real update timestamps.
+- [x] Recommended actions prioritize overdue deadlines, interviews, and Saved opportunities.
+- [x] Responsive loading, error, and empty states are implemented.
+- [x] Dashboard calculations have deterministic automated tests.
 
 ## Phase 1 acceptance criteria
 
