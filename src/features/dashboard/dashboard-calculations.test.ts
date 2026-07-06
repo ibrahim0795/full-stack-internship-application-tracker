@@ -1,52 +1,33 @@
-import { ApplicationStage, InterviewOutcome } from "@prisma/client";
-import { describe, expect, it } from "vitest";
+import { ApplicationStage } from "@prisma/client";
+import { beforeEach, describe, expect, it } from "vitest";
 
+import { calculateDashboard } from "./dashboard-calculations";
 import {
-  calculateDashboard,
-  type DashboardApplication,
-} from "./dashboard-calculations";
+  dashboardApplication,
+  pendingInterview,
+  resetFactorySequence,
+} from "@/test/factories";
 
 const now = new Date("2026-07-06T12:00:00.000Z");
 
-function application(
-  values: Partial<DashboardApplication> &
-    Pick<DashboardApplication, "id" | "stage">,
-): DashboardApplication {
-  return {
-    applicationDate: null,
-    closingDate: null,
-    companyName: `Company ${values.id}`,
-    createdAt: new Date("2026-07-01T12:00:00.000Z"),
-    interviews: [],
-    positionTitle: "Junior Developer",
-    updatedAt: new Date("2026-07-01T12:00:00.000Z"),
-    ...values,
-  };
-}
-
 describe("calculateDashboard", () => {
+  beforeEach(resetFactorySequence);
   it("calculates owner-data metrics, rates, and upcoming work", () => {
     const result = calculateDashboard(
       [
-        application({
+        dashboardApplication({
           closingDate: new Date("2026-07-05T12:00:00.000Z"),
           id: "saved",
           stage: ApplicationStage.SAVED,
         }),
-        application({
+        dashboardApplication({
           applicationDate: new Date("2026-07-02T12:00:00.000Z"),
           closingDate: new Date("2026-07-10T12:00:00.000Z"),
           id: "interview",
-          interviews: [
-            {
-              id: "interview-1",
-              outcome: InterviewOutcome.PENDING,
-              scheduledAt: new Date("2026-07-08T12:00:00.000Z"),
-            },
-          ],
+          interviews: [pendingInterview({ id: "interview-1" })],
           stage: ApplicationStage.INTERVIEW,
         }),
-        application({
+        dashboardApplication({
           applicationDate: new Date("2026-06-20T12:00:00.000Z"),
           id: "offer",
           stage: ApplicationStage.OFFER,
@@ -91,8 +72,11 @@ describe("calculateDashboard", () => {
   it("does not count saved or preparing records in conversion-rate denominators", () => {
     const result = calculateDashboard(
       [
-        application({ id: "saved", stage: ApplicationStage.SAVED }),
-        application({ id: "preparing", stage: ApplicationStage.PREPARING }),
+        dashboardApplication({ id: "saved", stage: ApplicationStage.SAVED }),
+        dashboardApplication({
+          id: "preparing",
+          stage: ApplicationStage.PREPARING,
+        }),
       ],
       now,
     );
