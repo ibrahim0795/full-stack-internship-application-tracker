@@ -156,3 +156,47 @@ export async function deleteApplicationAction(applicationId: string) {
   revalidatePath("/applications");
   redirect("/applications");
 }
+
+const stageChangeSchema = z.object({
+  applicationId: z.string().min(1),
+  stage: z.enum([
+    "SAVED",
+    "PREPARING",
+    "APPLIED",
+    "ASSESSMENT",
+    "INTERVIEW",
+    "OFFER",
+    "REJECTED",
+    "WITHDRAWN",
+  ]),
+});
+
+export async function moveApplicationStageAction(
+  applicationId: string,
+  stage: string,
+) {
+  const userId = await requireUserId("/kanban");
+  const parsed = stageChangeSchema.safeParse({ applicationId, stage });
+  if (!parsed.success) {
+    return { message: "That application stage is invalid.", success: false };
+  }
+
+  try {
+    const updated = await prisma.application.updateMany({
+      data: { stage: parsed.data.stage },
+      where: { id: parsed.data.applicationId, userId },
+    });
+    if (!updated.count) {
+      return { message: "Application could not be found.", success: false };
+    }
+    revalidatePath("/applications");
+    revalidatePath(`/applications/${applicationId}`);
+    revalidatePath("/kanban");
+    return { success: true };
+  } catch {
+    return {
+      message: "The stage change could not be saved. Your board was restored.",
+      success: false,
+    };
+  }
+}

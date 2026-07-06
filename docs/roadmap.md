@@ -9,8 +9,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 3: complete and merged
 - Phase 4: complete and merged
 - Phase 5: complete and merged
-- Phase 6: complete and awaiting review
-- Phases 7-14: not started
+- Phase 6: complete and merged
+- Phase 7: complete and awaiting review
+- Phases 8-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -60,6 +61,18 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Every private read and mutation includes the authenticated user ID.
 - [x] Empty, loading, not-found, and error states are implemented.
 - [x] Validation, ownership filters, list queries, and form errors have automated tests.
+
+## Phase 7 acceptance criteria
+
+- [x] All eight application stages render as counted Kanban columns.
+- [x] Pointer and keyboard drag sensors use a dedicated accessible handle.
+- [x] Every card provides an explicit stage selector for mobile and non-drag interaction.
+- [x] Stage mutations are validated and scoped to the authenticated owner.
+- [x] Optimistic moves persist to PostgreSQL and restore the previous state after failure.
+- [x] Search and work-arrangement filters update visible cards and counts.
+- [x] Horizontal snap scrolling keeps columns readable on small screens.
+- [x] Loading, error, live-announcement, and empty-column states are implemented.
+- [x] Success, rollback, filtering, and protected-route behavior have automated tests.
 
 ## Phase 1 acceptance criteria
 
