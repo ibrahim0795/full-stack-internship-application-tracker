@@ -2,6 +2,7 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   Columns3,
+  Files,
   LayoutDashboard,
   MessagesSquare,
 } from "lucide-react";
@@ -9,7 +10,13 @@ import {
 import type { AppNavigationItem } from "./app-shell";
 
 export function appNavigation(
-  active: "applications" | "calendar" | "dashboard" | "interviews" | "kanban",
+  active:
+    | "applications"
+    | "calendar"
+    | "dashboard"
+    | "interviews"
+    | "kanban"
+    | "resumes",
 ) {
   return [
     {
@@ -41,6 +48,12 @@ export function appNavigation(
       href: "/interviews",
       icon: <MessagesSquare aria-hidden="true" size={18} />,
       label: "Interviews",
+    },
+    {
+      active: active === "resumes",
+      href: "/resumes",
+      icon: <Files aria-hidden="true" size={18} />,
+      label: "CV manager",
     },
   ] satisfies AppNavigationItem[];
 }

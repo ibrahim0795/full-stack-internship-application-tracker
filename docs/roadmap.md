@@ -13,8 +13,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 7: complete and merged
 - Phase 8: complete and merged
 - Phase 9: complete and merged
-- Phase 10: complete and awaiting review
-- Phases 11-14: not started
+- Phase 10: complete and merged
+- Phase 11: complete and awaiting review
+- Phases 12-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -112,6 +113,18 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Pending interviews and follow-ups integrate with dashboard and calendar data.
 - [x] Interview, question, and checklist operations enforce owner scope.
 - [x] Responsive loading, empty, history, not-found, and error states are implemented.
+
+## Phase 11 acceptance criteria
+
+- [x] Users can create and edit named CV versions with target-role and file metadata.
+- [x] External URLs are represented honestly and managed uploads remain behind a storage abstraction.
+- [x] The first CV becomes default and default changes are transactional.
+- [x] CV lists show real application usage counts and links.
+- [x] Assigned CVs cannot be deleted until their applications are reassigned.
+- [x] Deleting a default selects a replacement in the same transaction.
+- [x] All CV reads and mutations enforce authenticated ownership.
+- [x] Responsive loading, empty, not-found, and error states are implemented.
+- [x] Validation, storage resolution, ownership, and protected-route behavior have automated tests.
 
 ## Phase 1 acceptance criteria
 

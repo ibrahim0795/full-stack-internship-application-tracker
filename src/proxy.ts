@@ -7,6 +7,7 @@ export const config = {
     "/kanban/:path*",
     "/calendar/:path*",
     "/interviews/:path*",
+    "/resumes/:path*",
     "/login",
     "/register",
     "/forgot-password",
