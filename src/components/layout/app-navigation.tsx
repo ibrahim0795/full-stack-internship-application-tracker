@@ -3,12 +3,13 @@ import {
   CalendarDays,
   Columns3,
   LayoutDashboard,
+  MessagesSquare,
 } from "lucide-react";
 
 import type { AppNavigationItem } from "./app-shell";
 
 export function appNavigation(
-  active: "applications" | "calendar" | "dashboard" | "kanban",
+  active: "applications" | "calendar" | "dashboard" | "interviews" | "kanban",
 ) {
   return [
     {
@@ -34,6 +35,12 @@ export function appNavigation(
       href: "/calendar",
       icon: <CalendarDays aria-hidden="true" size={18} />,
       label: "Calendar",
+    },
+    {
+      active: active === "interviews",
+      href: "/interviews",
+      icon: <MessagesSquare aria-hidden="true" size={18} />,
+      label: "Interviews",
     },
   ] satisfies AppNavigationItem[];
 }
