@@ -11,8 +11,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 5: complete and merged
 - Phase 6: complete and merged
 - Phase 7: complete and merged
-- Phase 8: complete and awaiting review
-- Phases 9-14: not started
+- Phase 8: complete and merged
+- Phase 9: complete and awaiting review
+- Phases 10-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -86,6 +87,18 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Recommended actions prioritize overdue deadlines, interviews, and Saved opportunities.
 - [x] Responsive loading, error, and empty states are implemented.
 - [x] Dashboard calculations have deterministic automated tests.
+
+## Phase 9 acceptance criteria
+
+- [x] A protected, URL-addressable monthly calendar renders a six-week grid.
+- [x] Mobile users receive a readable chronological month list.
+- [x] Active deadlines, pending interviews, follow-ups, and reminders share one event model.
+- [x] Event grouping and display use the user's configured timezone.
+- [x] Users can create, complete, reopen, and delete custom reminders.
+- [x] Reminder and related-application mutations are owner-scoped.
+- [x] Overdue, upcoming, and completed states are clearly separated.
+- [x] The dashboard surfaces incomplete reminders due within thirty days.
+- [x] Month parsing, aggregation, timezone behavior, and repository ownership have automated tests.
 
 ## Phase 1 acceptance criteria
 

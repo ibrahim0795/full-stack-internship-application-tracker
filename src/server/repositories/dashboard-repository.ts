@@ -22,3 +22,22 @@ export function getDashboardApplications(userId: string) {
     where: { userId },
   });
 }
+
+export function getDashboardReminders(userId: string, now = new Date()) {
+  return prisma.reminder.findMany({
+    orderBy: { dueAt: "asc" },
+    select: {
+      applicationId: true,
+      dueAt: true,
+      id: true,
+      interview: { select: { applicationId: true } },
+      title: true,
+    },
+    take: 5,
+    where: {
+      completedAt: null,
+      dueAt: { lte: new Date(now.getTime() + 30 * 86_400_000) },
+      userId,
+    },
+  });
+}

@@ -72,7 +72,8 @@ export const authConfig = {
       const protectedRoute =
         pathname.startsWith("/dashboard") ||
         pathname.startsWith("/applications") ||
-        pathname.startsWith("/kanban");
+        pathname.startsWith("/kanban") ||
+        pathname.startsWith("/calendar");
       const authPage = [
         "/login",
         "/register",
