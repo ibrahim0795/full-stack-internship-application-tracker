@@ -4,6 +4,7 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/applications/:path*",
+    "/kanban/:path*",
     "/login",
     "/register",
     "/forgot-password",

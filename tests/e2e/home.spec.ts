@@ -90,3 +90,13 @@ test("applications redirect unauthenticated visitors to login", async ({
     "http://localhost:3000/applications",
   );
 });
+
+test("kanban redirects unauthenticated visitors to login", async ({ page }) => {
+  await page.goto("/kanban");
+
+  await expect(page).toHaveURL(/\/login\?callbackUrl=/);
+  const currentUrl = new URL(page.url());
+  expect(currentUrl.searchParams.get("callbackUrl")).toBe(
+    "http://localhost:3000/kanban",
+  );
+});
