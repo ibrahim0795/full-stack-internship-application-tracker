@@ -1,12 +1,14 @@
-import { LayoutDashboard, LogOut, Orbit, ShieldCheck } from "lucide-react";
+import { ArrowRight, LogOut, Orbit, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { logoutAction } from "@/app/actions/auth";
 import { auth } from "@/auth";
 import { AppShell } from "@/components/layout/app-shell";
+import { appNavigation } from "@/components/layout/app-navigation";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants, Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -16,17 +18,7 @@ export default async function DashboardPage() {
   if (!session?.user) redirect("/login?callbackUrl=/dashboard");
 
   return (
-    <AppShell
-      navigation={[
-        {
-          active: true,
-          href: "/dashboard",
-          icon: <LayoutDashboard aria-hidden="true" size={18} />,
-          label: "Dashboard",
-        },
-      ]}
-      title="Dashboard"
-    >
+    <AppShell navigation={appNavigation("dashboard")} title="Dashboard">
       <div className="mx-auto max-w-5xl">
         <Badge tone="success">
           <ShieldCheck aria-hidden="true" size={14} /> Authenticated session
@@ -36,8 +28,8 @@ export default async function DashboardPage() {
           {session.user.name ? `, ${session.user.name}` : " to CareerOrbit"}.
         </h2>
         <p className="text-muted mt-4 max-w-2xl text-lg leading-8">
-          Your private mission control is secured. Application tracking arrives
-          in the next database phase.
+          Your private mission control is secured. Start building a clear,
+          searchable record of every opportunity.
         </p>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -74,6 +66,13 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        <Link
+          className={buttonVariants({ className: "mt-8" })}
+          href="/applications"
+        >
+          Open applications <ArrowRight aria-hidden="true" size={17} />
+        </Link>
 
         <form action={logoutAction} className="mt-8">
           <Button type="submit" variant="secondary">

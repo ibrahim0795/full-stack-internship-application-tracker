@@ -4,6 +4,7 @@ import type {
   SelectHTMLAttributes,
   TextareaHTMLAttributes,
 } from "react";
+import { cloneElement, isValidElement } from "react";
 
 import { cn } from "@/lib/utils/cn";
 
@@ -29,6 +30,21 @@ export function FormField({
   label,
   required,
 }: FormFieldProps) {
+  const describedBy = error
+    ? `${htmlFor}-error`
+    : description
+      ? `${htmlFor}-description`
+      : undefined;
+  const control = isValidElement<{
+    "aria-describedby"?: string;
+    "aria-invalid"?: boolean;
+  }>(children)
+    ? cloneElement(children, {
+        "aria-describedby": children.props["aria-describedby"] ?? describedBy,
+        "aria-invalid": children.props["aria-invalid"] ?? Boolean(error),
+      })
+    : children;
+
   return (
     <div className={cn("space-y-2", className)}>
       <label
@@ -38,7 +54,7 @@ export function FormField({
         {label}
         {required ? <span className="text-danger ml-1">*</span> : null}
       </label>
-      {children}
+      {control}
       {description && !error ? (
         <p id={`${htmlFor}-description`} className="text-muted text-sm">
           {description}

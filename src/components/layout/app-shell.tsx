@@ -50,6 +50,25 @@ export function AppShell({ children, navigation, title }: AppShellProps) {
           </h1>
           <ThemeToggle />
         </header>
+        <nav
+          aria-label="Mobile application navigation"
+          className="border-border bg-surface/35 flex gap-2 overflow-x-auto border-b px-5 py-3 lg:hidden"
+        >
+          {navigation.map((item) => (
+            <Link
+              aria-current={item.active ? "page" : undefined}
+              className={cn(
+                "text-muted focus-visible:outline-focus inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2",
+                item.active && "bg-primary/10 text-primary-strong",
+              )}
+              href={item.href}
+              key={item.href}
+            >
+              {item.icon}
+              {item.label}
+            </Link>
+          ))}
+        </nav>
         <main className="p-5 sm:p-8">{children}</main>
       </div>
     </div>
