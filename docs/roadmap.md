@@ -16,8 +16,8 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 10: complete and merged
 - Phase 11: complete and merged
 - Phase 12: complete and merged
-- Phase 13: complete and awaiting review
-- Phase 14: not started
+- Phase 13: complete and merged
+- Phase 14: release readiness complete; public deployment awaiting provider credentials
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -150,6 +150,16 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] A real second-user journey verifies that private application details cannot be read cross-owner.
 - [x] Database-dependent tests skip clearly unless a disposable `E2E_DATABASE_URL` is configured.
 - [x] Local and CI test layers, commands, isolation rules, and database safety are documented.
+
+## Phase 14 acceptance criteria
+
+- [x] GitHub Actions runs formatting, linting, types, unit tests, a production build, and authenticated browser journeys with PostgreSQL.
+- [x] Production database migrations use an explicit repeatable command.
+- [x] A database-aware health endpoint returns safe readiness responses without error details.
+- [x] Production security headers and canonical metadata are configured.
+- [x] Environment, migration, demo-data, smoke-test, monitoring, and rollback procedures are documented.
+- [x] The README gives recruiters a concise problem statement, feature overview, architecture links, and honest release status.
+- [ ] Managed PostgreSQL and Vercel credentials are configured and the public deployment is verified.
 
 ## Phase 1 acceptance criteria
 
