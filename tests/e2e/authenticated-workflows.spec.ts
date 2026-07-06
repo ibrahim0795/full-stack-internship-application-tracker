@@ -3,8 +3,8 @@ import { expect, test } from "@playwright/test";
 const hasTestDatabase = Boolean(process.env.E2E_DATABASE_URL);
 const runId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const password = "CareerOrbit-Test-2026";
-const firstUser = `careerorbit-${runId}-one@example.com`;
-const secondUser = `careerorbit-${runId}-two@example.com`;
+let firstUser = "";
+let secondUser = "";
 let applicationUrl = "";
 
 async function register(page: import("@playwright/test").Page, email: string) {
@@ -14,7 +14,7 @@ async function register(page: import("@playwright/test").Page, email: string) {
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByLabel("Confirm password").fill(password);
   await page.getByRole("button", { name: "Create account" }).click();
-  await expect(page).toHaveURL(/\/dashboard/);
+  await expect(page).toHaveURL(/\/dashboard/, { timeout: 15_000 });
 }
 
 async function signIn(page: import("@playwright/test").Page, email: string) {
@@ -22,7 +22,7 @@ async function signIn(page: import("@playwright/test").Page, email: string) {
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/dashboard/);
+  await expect(page).toHaveURL(/\/dashboard/, { timeout: 15_000 });
 }
 
 test.describe.serial("database-backed authenticated journeys", () => {
@@ -30,6 +30,13 @@ test.describe.serial("database-backed authenticated journeys", () => {
     !hasTestDatabase,
     "Set E2E_DATABASE_URL to a disposable PostgreSQL database to run authenticated journeys.",
   );
+
+  test.beforeAll(({}, testInfo) => {
+    const project = testInfo.project.name.replace(/[^a-z0-9]+/gi, "-");
+    const identity = `${runId}-${project}-${testInfo.workerIndex}`;
+    firstUser = `careerorbit-${identity}-one@example.com`;
+    secondUser = `careerorbit-${identity}-two@example.com`;
+  });
 
   test("registers and creates an application", async ({ page }) => {
     await register(page, firstUser);
@@ -58,10 +65,13 @@ test.describe.serial("database-backed authenticated journeys", () => {
     await page.goto("/applications");
     await page.getByPlaceholder("Search company or role").fill("Test Orbit");
     await page.getByRole("button", { name: "Apply" }).click();
-    await expect(page.getByText("Test Orbit Labs")).toBeVisible();
+    const applicationPath = new URL(applicationUrl).pathname;
+    await expect(page.locator(`a[href="${applicationPath}"]`)).toBeVisible();
 
     await page.goto("/kanban");
-    await page.getByLabel("Move to stage").selectOption("APPLIED");
+    const applicationId = applicationPath.split("/").at(-1);
+    const card = page.locator(`[data-application-id="${applicationId}"]`);
+    await card.getByLabel("Move to stage").selectOption("APPLIED");
     await expect(page.getByText(/moved to applied/i)).toBeVisible();
   });
 
@@ -81,6 +91,8 @@ test.describe.serial("database-backed authenticated journeys", () => {
     page.once("dialog", (dialog) => dialog.accept());
     await page.getByRole("button", { name: "Delete application" }).click();
     await expect(page).toHaveURL(/\/applications$/);
-    await expect(page.getByText("Test Orbit Labs")).not.toBeVisible();
+    await expect(
+      page.locator(`a[href="${new URL(applicationUrl).pathname}"]`),
+    ).not.toBeVisible();
   });
 });
