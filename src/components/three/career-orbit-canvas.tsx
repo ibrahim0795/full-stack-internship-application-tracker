@@ -497,6 +497,7 @@ export function CareerOrbitCanvas({
         antialias: !compact,
         powerPreference: "high-performance",
       }}
+      performance={{ debounce: 240, max: 1, min: 0.5 }}
       onCreated={({ gl }) => {
         gl.outputColorSpace = THREE.SRGBColorSpace;
         gl.toneMapping = THREE.ACESFilmicToneMapping;

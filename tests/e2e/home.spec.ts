@@ -43,11 +43,42 @@ test("manual reduced-motion preference persists", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Enable motion" }),
   ).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-reduce-motion", "");
+  await expect(page.locator("[data-scene-fallback]")).toBeAttached();
 
   await page.reload();
   await expect(
     page.getByRole("button", { name: "Enable motion" }),
   ).toBeVisible();
+});
+
+test("skip navigation moves keyboard focus to the main content", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+
+  const skipLink = page.getByRole("link", { name: "Skip to content" });
+  await expect(skipLink).toBeFocused();
+  await skipLink.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+});
+
+test("target responsive widths do not introduce page overflow", async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1024, 1440]) {
+    await page.setViewportSize({ height: 900, width });
+    await page.goto("/");
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(
+      dimensions.scrollWidth,
+      `overflow at ${width}px`,
+    ).toBeLessThanOrEqual(dimensions.clientWidth);
+  }
 });
 
 test("authentication entry points are usable", async ({ page }) => {

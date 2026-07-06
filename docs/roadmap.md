@@ -14,8 +14,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 8: complete and merged
 - Phase 9: complete and merged
 - Phase 10: complete and merged
-- Phase 11: complete and awaiting review
-- Phases 12-14: not started
+- Phase 11: complete and merged
+- Phase 12: complete and awaiting review
+- Phases 13-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -125,6 +126,17 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] All CV reads and mutations enforce authenticated ownership.
 - [x] Responsive loading, empty, not-found, and error states are implemented.
 - [x] Validation, storage resolution, ownership, and protected-route behavior have automated tests.
+
+## Phase 12 acceptance criteria
+
+- [x] Public and protected shells provide keyboard-accessible skip navigation and main landmarks.
+- [x] Important controls retain visible focus, semantic names, and non-pointer alternatives.
+- [x] System and manual reduced-motion preferences preserve all information with a static fallback.
+- [x] WebGL capability, hardware limits, data saver, and slow connections select an appropriate experience.
+- [x] Canvas pixel ratio and visual complexity are capped for compact devices.
+- [x] Rendering pauses when the experience is offscreen or the document is hidden.
+- [x] Responsive tests cover 375, 768, 1024, and 1440 pixel widths without page overflow.
+- [x] Accessibility, performance budgets, fallback behavior, and manual QA are documented.
 
 ## Phase 1 acceptance criteria
 
