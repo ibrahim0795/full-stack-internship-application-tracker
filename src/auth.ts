@@ -74,7 +74,8 @@ export const authConfig = {
         pathname.startsWith("/applications") ||
         pathname.startsWith("/kanban") ||
         pathname.startsWith("/calendar") ||
-        pathname.startsWith("/interviews");
+        pathname.startsWith("/interviews") ||
+        pathname.startsWith("/resumes");
       const authPage = [
         "/login",
         "/register",
