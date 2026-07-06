@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 12 hardens keyboard access, reduced-motion behavior, responsive layouts, device-aware 3D fallbacks, and measurable performance safeguards.
+> **Current status:** Phase 13 expands deterministic unit and component coverage and defines database-backed browser journeys for application CRUD, filtering, stage movement, and cross-user isolation.
 
 ## Planned product capabilities
 
@@ -35,6 +35,7 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 - [Interview preparation](docs/interview-preparation.md)
 - [CV manager](docs/cv-manager.md)
 - [Accessibility and performance](docs/accessibility-performance.md)
+- [Testing strategy](docs/testing.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)
@@ -67,6 +68,8 @@ npm test
 npm run test:e2e
 npm run build
 ```
+
+Authenticated browser journeys require a disposable `E2E_DATABASE_URL`; without it they are skipped explicitly. See the [testing strategy](docs/testing.md).
 
 ## Environment safety
 
