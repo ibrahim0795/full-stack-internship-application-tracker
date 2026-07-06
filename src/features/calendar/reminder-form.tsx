@@ -8,13 +8,16 @@ import {
 } from "@/app/actions/reminders";
 import { Button } from "@/components/ui/button";
 import { FormField, Input, Select } from "@/components/ui/form-field";
+import { zonedDateTimeToIso } from "@/lib/dates/timezone";
 
 const initialState: ReminderActionState = { status: "idle" };
 
 export function ReminderForm({
   applications,
+  timezone,
 }: {
   applications: { companyName: string; id: string; positionTitle: string }[];
+  timezone: string;
 }) {
   const [state, formAction, pending] = useActionState(
     createReminderAction,
@@ -32,7 +35,7 @@ export function ReminderForm({
   function prepareUtcDate(event: FormEvent<HTMLFormElement>) {
     const localValue = new FormData(event.currentTarget).get("localDueAt");
     if (dueAtRef.current && typeof localValue === "string" && localValue) {
-      dueAtRef.current.value = new Date(localValue).toISOString();
+      dueAtRef.current.value = zonedDateTimeToIso(localValue, timezone);
     }
   }
 
@@ -52,7 +55,7 @@ export function ReminderForm({
         <Input id="reminder-title" name="title" required />
       </FormField>
       <FormField
-        description="Enter the time shown on this device; CareerOrbit stores it safely in UTC."
+        description={`Entered in ${timezone} and stored safely in UTC.`}
         error={dueAtError}
         htmlFor="reminder-due"
         label="Date and time"

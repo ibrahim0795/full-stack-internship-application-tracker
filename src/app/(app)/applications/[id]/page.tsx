@@ -78,6 +78,12 @@ export default async function ApplicationDetailsPage({
           <div className="flex flex-wrap gap-2">
             <Link
               className={buttonVariants({ variant: "secondary" })}
+              href={`/interviews/new?applicationId=${id}`}
+            >
+              Schedule interview
+            </Link>
+            <Link
+              className={buttonVariants({ variant: "secondary" })}
               href={`/applications/${id}/edit`}
             >
               <Pencil aria-hidden="true" size={17} /> Edit

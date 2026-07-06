@@ -112,3 +112,15 @@ test("calendar redirects unauthenticated visitors to login", async ({
     "http://localhost:3000/calendar",
   );
 });
+
+test("interviews redirect unauthenticated visitors to login", async ({
+  page,
+}) => {
+  await page.goto("/interviews");
+
+  await expect(page).toHaveURL(/\/login\?callbackUrl=/);
+  const currentUrl = new URL(page.url());
+  expect(currentUrl.searchParams.get("callbackUrl")).toBe(
+    "http://localhost:3000/interviews",
+  );
+});

@@ -203,7 +203,10 @@ export default async function CalendarPage({
               </p>
             </CardHeader>
             <CardContent>
-              <ReminderForm applications={applications} />
+              <ReminderForm
+                applications={applications}
+                timezone={source.timezone}
+              />
             </CardContent>
           </Card>
         </div>

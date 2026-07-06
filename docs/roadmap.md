@@ -12,8 +12,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 6: complete and merged
 - Phase 7: complete and merged
 - Phase 8: complete and merged
-- Phase 9: complete and awaiting review
-- Phases 10-14: not started
+- Phase 9: complete and merged
+- Phase 10: complete and awaiting review
+- Phases 11-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -99,6 +100,18 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] Overdue, upcoming, and completed states are clearly separated.
 - [x] The dashboard surfaces incomplete reminders due within thirty days.
 - [x] Month parsing, aggregation, timezone behavior, and repository ownership have automated tests.
+
+## Phase 10 acceptance criteria
+
+- [x] Users can create, view, edit, and delete interviews linked to owned applications.
+- [x] Interview records include schedule, timezone, format, location/link, interviewer, notes, outcome, and follow-up.
+- [x] Date-time fields round-trip through UTC with timezone and daylight-saving support.
+- [x] Users can add, edit, answer, categorize, and delete preparation questions.
+- [x] Checklist items can be added, completed, reopened, and deleted.
+- [x] Persisted checklist and answer progress appears in interview lists and details.
+- [x] Pending interviews and follow-ups integrate with dashboard and calendar data.
+- [x] Interview, question, and checklist operations enforce owner scope.
+- [x] Responsive loading, empty, history, not-found, and error states are implemented.
 
 ## Phase 1 acceptance criteria
 
