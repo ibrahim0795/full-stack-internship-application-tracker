@@ -78,3 +78,15 @@ test("dashboard redirects unauthenticated visitors to login", async ({
     page.getByRole("heading", { name: "Welcome back" }),
   ).toBeVisible();
 });
+
+test("applications redirect unauthenticated visitors to login", async ({
+  page,
+}) => {
+  await page.goto("/applications");
+
+  await expect(page).toHaveURL(/\/login\?callbackUrl=/);
+  const currentUrl = new URL(page.url());
+  expect(currentUrl.searchParams.get("callbackUrl")).toBe(
+    "http://localhost:3000/applications",
+  );
+});

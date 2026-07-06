@@ -2,7 +2,7 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** Phase 5 adds the complete relational PostgreSQL model, ownership-safe repositories, integrity constraints, migrations, and a coherent demo seed. Application interfaces follow in focused, reviewable branches.
+> **Current status:** Phase 6 adds authenticated application CRUD, search, filters, sorting, tags, CV assignment, contacts, notes, and safe deletion on top of the relational PostgreSQL model.
 
 ## Planned product capabilities
 
@@ -28,6 +28,7 @@ CareerOrbit is a full-stack internship and junior-job application tracker for st
 - [3D experience](docs/3d-experience.md)
 - [Design system](docs/design-system.md)
 - [Authentication architecture](docs/authentication.md)
+- [Application management](docs/application-management.md)
 - [Relational data model](docs/data-model.md)
 - [3D landing storyboard](docs/landing-storyboard.md)
 - [Delivery roadmap](docs/roadmap.md)

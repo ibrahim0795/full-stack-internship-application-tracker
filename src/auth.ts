@@ -69,7 +69,9 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request }) {
       const pathname = request.nextUrl.pathname;
-      const protectedRoute = pathname.startsWith("/dashboard");
+      const protectedRoute =
+        pathname.startsWith("/dashboard") ||
+        pathname.startsWith("/applications");
       const authPage = [
         "/login",
         "/register",

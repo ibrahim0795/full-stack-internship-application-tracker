@@ -8,8 +8,9 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 2: complete and merged
 - Phase 3: complete and merged
 - Phase 4: complete and merged
-- Phase 5: complete and awaiting review
-- Phases 6-14: not started
+- Phase 5: complete and merged
+- Phase 6: complete and awaiting review
+- Phases 7-14: not started
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -48,6 +49,17 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - [x] The deterministic seed resets only its demo workspace and creates coherent sample data.
 - [x] Repository reads and mutations require an authenticated user ID.
 - [x] Ownership filters and the migration contract have automated tests.
+
+## Phase 6 acceptance criteria
+
+- [x] Authenticated users can create, view, edit, and confirm-delete applications.
+- [x] List search, stage and arrangement filters, and sorting execute on the server.
+- [x] Forms use React Hook Form, Zod, accessible labels, and server validation.
+- [x] Skills, salary, dates, links, location, arrangement, stage, and CV assignment persist.
+- [x] Application details support activity notes and company contacts.
+- [x] Every private read and mutation includes the authenticated user ID.
+- [x] Empty, loading, not-found, and error states are implemented.
+- [x] Validation, ownership filters, list queries, and form errors have automated tests.
 
 ## Phase 1 acceptance criteria
 

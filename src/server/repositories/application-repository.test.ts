@@ -54,4 +54,26 @@ describe("applicationRepository", () => {
       where: { id: "application-1", userId: "user-1" },
     });
   });
+
+  it("keeps list filters inside the owner scope", async () => {
+    const database = createDatabaseDouble();
+    const repository = createApplicationRepository(
+      database as unknown as ApplicationDatabase,
+    );
+
+    await repository.list("user-1", {
+      query: "orbit",
+      stage: ApplicationStage.INTERVIEW,
+    });
+
+    expect(database.application.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          OR: expect.any(Array),
+          stage: ApplicationStage.INTERVIEW,
+          userId: "user-1",
+        }),
+      }),
+    );
+  });
 });
