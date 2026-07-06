@@ -1,8 +1,15 @@
-import { BriefcaseBusiness, Columns3, LayoutDashboard } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  CalendarDays,
+  Columns3,
+  LayoutDashboard,
+} from "lucide-react";
 
 import type { AppNavigationItem } from "./app-shell";
 
-export function appNavigation(active: "applications" | "dashboard" | "kanban") {
+export function appNavigation(
+  active: "applications" | "calendar" | "dashboard" | "kanban",
+) {
   return [
     {
       active: active === "dashboard",
@@ -21,6 +28,12 @@ export function appNavigation(active: "applications" | "dashboard" | "kanban") {
       href: "/kanban",
       icon: <Columns3 aria-hidden="true" size={18} />,
       label: "Kanban",
+    },
+    {
+      active: active === "calendar",
+      href: "/calendar",
+      icon: <CalendarDays aria-hidden="true" size={18} />,
+      label: "Calendar",
     },
   ] satisfies AppNavigationItem[];
 }

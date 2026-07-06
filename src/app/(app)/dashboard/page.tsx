@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  BellRing,
   BriefcaseBusiness,
   CalendarClock,
   CalendarDays,
@@ -30,14 +31,20 @@ import {
   TimelineChart,
 } from "@/features/dashboard/dashboard-charts";
 import { cn } from "@/lib/utils/cn";
-import { getDashboardApplications } from "@/server/repositories/dashboard-repository";
+import {
+  getDashboardApplications,
+  getDashboardReminders,
+} from "@/server/repositories/dashboard-repository";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login?callbackUrl=/dashboard");
-  const applications = await getDashboardApplications(session.user.id);
+  const [applications, reminders] = await Promise.all([
+    getDashboardApplications(session.user.id),
+    getDashboardReminders(session.user.id),
+  ]);
   const dashboard = calculateDashboard(applications);
 
   return (
@@ -219,6 +226,79 @@ export default async function DashboardPage() {
             ))}
           </DashboardList>
         </div>
+
+        <Card className="mt-6">
+          <CardHeader className="flex-row items-center justify-between space-y-0">
+            <div>
+              <BellRing
+                className="text-primary-strong"
+                aria-hidden="true"
+                size={20}
+              />
+              <h3 className="text-foreground mt-3 text-xl font-semibold">
+                Reminders
+              </h3>
+              <p className="text-muted mt-1 text-sm">
+                Incomplete reminders due within 30 days, including overdue
+                items.
+              </p>
+            </div>
+            <Link
+              className={buttonVariants({ size: "sm", variant: "ghost" })}
+              href="/calendar"
+            >
+              Open calendar
+            </Link>
+          </CardHeader>
+          <CardContent>
+            {reminders.length ? (
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {reminders.map((reminder) => {
+                  const overdue = reminder.dueAt < new Date();
+                  const content = (
+                    <>
+                      <p className="text-foreground font-semibold">
+                        {reminder.title}
+                      </p>
+                      <time
+                        className={cn(
+                          "mt-2 block text-xs",
+                          overdue ? "text-danger" : "text-muted",
+                        )}
+                        dateTime={reminder.dueAt.toISOString()}
+                      >
+                        {overdue ? "Overdue · " : ""}
+                        {reminder.dueAt.toLocaleString()}
+                      </time>
+                    </>
+                  );
+                  const relatedApplicationId =
+                    reminder.applicationId ?? reminder.interview?.applicationId;
+                  return relatedApplicationId ? (
+                    <Link
+                      className="bg-surface-raised hover:border-primary/30 rounded-2xl border border-transparent p-4 transition"
+                      href={`/applications/${relatedApplicationId}`}
+                      key={reminder.id}
+                    >
+                      {content}
+                    </Link>
+                  ) : (
+                    <div
+                      className="bg-surface-raised rounded-2xl p-4"
+                      key={reminder.id}
+                    >
+                      {content}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-muted py-8 text-center text-sm">
+                No incomplete reminders are due within 30 days.
+              </p>
+            )}
+          </CardContent>
+        </Card>
 
         <Card className="mt-6">
           <CardHeader className="flex-row items-center justify-between space-y-0">

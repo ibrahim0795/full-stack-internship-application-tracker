@@ -100,3 +100,15 @@ test("kanban redirects unauthenticated visitors to login", async ({ page }) => {
     "http://localhost:3000/kanban",
   );
 });
+
+test("calendar redirects unauthenticated visitors to login", async ({
+  page,
+}) => {
+  await page.goto("/calendar");
+
+  await expect(page).toHaveURL(/\/login\?callbackUrl=/);
+  const currentUrl = new URL(page.url());
+  expect(currentUrl.searchParams.get("callbackUrl")).toBe(
+    "http://localhost:3000/calendar",
+  );
+});

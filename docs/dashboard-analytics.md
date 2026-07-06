@@ -25,6 +25,8 @@ Saved and Preparing records are excluded from conversion-rate denominators. Zero
 
 Recommendations are deterministic rather than AI-generated. Overdue deadlines and upcoming interviews are prioritized, followed by Saved opportunities that need a decision. An empty workspace recommends creating the first application.
 
+The dashboard also lists incomplete custom reminders due within thirty days and links to the full calendar workflow.
+
 ## Ownership
 
 The dashboard repository requires `userId` and applies it directly to the application query. Interviews are loaded only as descendants of those owned applications. Calculations receive no cross-account records.
