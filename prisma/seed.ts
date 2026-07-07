@@ -91,7 +91,6 @@ async function seed() {
       tags: {
         create: [typescript, react, postgresql].map((tag) => ({
           tagId: tag.id,
-          userId: user.id,
         })),
       },
     },
