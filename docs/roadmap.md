@@ -17,7 +17,7 @@ Each phase uses one focused branch, issue, review, and pull request. A phase sta
 - Phase 11: complete and merged
 - Phase 12: complete and merged
 - Phase 13: complete and merged
-- Phase 14: release readiness complete; public deployment awaiting provider credentials
+- Phase 14: release readiness and public deployment complete
 
 | Phase | Branch                              | Deliverable                                                                                                 |
 | ----- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
