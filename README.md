@@ -2,9 +2,9 @@
 
 CareerOrbit is a full-stack internship and junior-job application tracker for students and early-career developers. It is designed to turn a scattered job search into a clear path from saved opportunity to offer.
 
-> **Current status:** All product phases are implemented and production-ready. Public deployment is awaiting managed PostgreSQL and Vercel credentials.
+> **Current status:** All product phases are implemented and deployed.
 
-**Live demo:** Pending first production deployment
+**Live demo:** [full-stack-internship-application-t.vercel.app](https://full-stack-internship-application-t.vercel.app/)
 
 ## Why CareerOrbit
 
@@ -19,7 +19,7 @@ Students often track roles across bookmarks, spreadsheets, calendars, notes, and
 - Cinematic 3D landing experience with reduced-motion and constrained-device fallbacks
 - Strict TypeScript, layered automated testing, CI, health checks, and release documentation
 
-## Planned product capabilities
+## Product capabilities
 
 - Application tracking with search, filters, notes, contacts, tags, and CV assignment
 - Accessible Kanban workflow from Saved through Offer
@@ -92,10 +92,6 @@ GitHub Actions runs the full suite with an isolated PostgreSQL service, includin
 ## Deployment
 
 The repository includes Vercel configuration, explicit production migration commands, security headers, a database-aware `/api/health` endpoint, CI, rollback guidance, and a release checklist. See the [deployment guide](docs/deployment.md).
-
-## Screenshots and demonstration
-
-Final production screenshots and a short demonstration video will be added after the first public deployment so the README does not present local or fabricated URLs as a live product.
 
 ## Environment safety
 
